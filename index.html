@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang=it>
+          <head>
+            <title>Ping Pong di Luigi Diplomatico </title>
+              <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.js"></script>
+              <meta charset="utf-8" />
+              <meta name="viewport" content="width=device-width, initial-scale=1">
+              <style>
+                  html, body { margin: 0; padding: 0; }
+                  canvas { display: block; }
+              </style>
+          </head>
+              <body>
+                  <script>
+				  
+				 let tasto;
+let coordinataRettangoloY=0;
+
+//coordinata X ed Y della pallina 
+let coordinataX=100;
+let coordinataY=30;
+
+//spostamento della pallina sugli assi X ed Y
+let incrementoX=2;
+let incrementoY=2;
+
+//varabile che indicano gli fps 
+let frameRate;
+
+function setup() {
+  createCanvas(400, 400);
+}
+
+function draw() {
+  tasto=key
+  if(key=="") {tasto="m"}
+  text(key,350,350);
+  background(220,0,100);
+  textStyle(BOLD);
+  textSize(14);
+  switch (tasto) {
+    case "p":
+      text("Pausa",150,200);
+      break;
+      case "m":
+      //R-G-B
+  fill(255,255,255);
+  textSize(30);
+  textStyle(BOLD);
+  text("Gioco pong",110,30);
+  textStyle(ITALIC);
+  textSize(15);
+  text("seleziona velocità della palla:",100,60);
+  textStyle(BOLD);
+  text("1x",100,85);
+  text("2x",140,85);
+  text("3x",180,85);
+  text("4x",220,85);
+  text("5x",260,85);
+  textStyle(ITALIC);
+  text("seleziona modalità di gioco:",100,110);
+  textStyle(BOLD);
+  text("facile",100,130);
+  text("normale",150,130);
+  text("difficile",220,130);
+  textSize(30);
+  textStyle(BOLDITALIC);
+      text("Gioca!",140,170);
+      text("Menu",150,300);
+      break;
+      case "g":
+      //spostamento per far si che la freccia del mouse sia al centro del rettangolo
+  coordinataRettangoloY=mouseY-50;
+  
+  //se la coordinataY dell'angolo in alto a sinistra della racchetta coordinataRettangoloY è <=0 allora a coordinataRettangoloY si assegna valore 0 per far si che il rettangolo non esca dall'area
+  if(coordinataRettangoloY<=0){
+    coordinataRettangoloY=0;
+  }
+  
+  //se la coordinata X della pallina è >=375 invertiamo l'incremento per far si che la pallina torni in dietro in modo da non fuoriuscire dall'area. Si usa 375 perchè il diametro della pallina equivale a 50 e per far si che appena venga toccato il bordo la pallina debba rimbalzare bisogna levare metà diametro cosi appena si arriva a 375 e la circonferenza tocca il bordo, la palla tornerà indietro 
+  if(coordinataX>=375){
+    incrementoX=-incrementoX;
+  }
+  
+  //se invece la coordinata Y della pallina è >= di 375 invertiamo l'incrementoY per far tornare la pallina verso l'alto e non farla fuoriuscire dall'area
+  if(coordinataY>=375){
+    incrementoY=-incrementoY
+  }
+  
+  //se invece la coordinata X della pallina è in posizione<=25 si inverte di nuovo l'incremento X per far restare la pallina nell'area. Si usa 25 perchè cosi appena la pallina tocca il bordo torna indietro, ho sottratto metà del diametro
+  if(coordinataX<=25){
+    incrementoX=-incrementoX
+  }
+  
+  //se la coordinata Y della pallina è invece <=25 si inverte di nuovo l'incremento per far rimbalzare la pallina e farla rimanere nell'area
+  if(coordinataY<=25){
+    incrementoY=-incrementoY
+  }
+  
+  //se la coordinata Y del rettangolo si trova >=300, deve essergli assegnato il valore 300 in modo che il rettangolo non esca fuori dall'area
+  if(coordinataRettangoloY>=300){
+    coordinataRettangoloY=300
+  }
+  
+  coordinataX=coordinataX+incrementoX;
+  coordinataY=coordinataY+incrementoY;
+  
+  //disegno area e figure
+  background(255,0,0);
+  
+  //la raccheta
+  rect(30,coordinataRettangoloY,20,100);
+  
+  //la pallina
+  circle(coordinataX,coordinataY,50);
+  
+  //funzione fps 
+  frameRate=getFrameRate();
+  text(frameRate,0,10);
+
+  //scrittura coordinate della pallina che si aggiornano di continuo
+  text("coordinate x ed y",0,20);
+  text(coordinataX,50,30);
+  text(coordinataY,80,30);
+      break; 
+  default:
+  text("scelta non valida",200,200);
+}
+  
+  
+  
+  
+
+}
+ </script>
+ </body>
+ </html>
