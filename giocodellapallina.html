@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang=it>
+	<head>
+		<meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="author" content="Diplomatico Luigi">
+		<meta name="description" content="Gioco della pallina">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.js"> </script>
+        <title>Palla</title>
+		
+		<style>
+			html, body {
+			margin: 0;
+			padding: 0;
+			}
+			
+			canvas{
+			display: block;
+			}
+		</style>
+	</head>
+	
+	<body>
+		<script>
+			//Coordinata X delle palle
+			let coordinataPallaX = [];
+			//Coordinata y delle palline
+			let coordinataPallaY = [];
+			//Indice array
+			let i;
+			//Coordinata rettangolo x
+			let coordinataRettangoloX;
+			//Diametro palla
+			let diametro=50;
+			
+			function setup() {
+			//Faccio apparire le palline in posizioni Y differenti
+			for(i=0;i<20;i++) {
+			coordinataPallaY[i]=Math.random() *-2000;
+			
+			}
+			
+			//Faccio apparire le palline in posizioni X differenti
+			for(i=0;i<20;i++) {
+			coordinataPallaX[i]=Math.random() *390;
+			
+			}
+			//Area da disegno
+			createCanvas(400, 400);
+			
+			
+			
+			}
+			
+			function draw() {
+			background(150,0,255);
+			//Disegno le palline in un ciclo for 
+			for(i=0;i<20;i++) {
+			circle(coordinataPallaX[i],coordinataPallaY[i],diametro);
+			
+			}
+			
+			//Aumento la coordinata Y della pallina di 2 per farla cadere
+			for(i=0;i<20;i++) {
+			coordinataPallaY[i]=coordinataPallaY[i]+2;
+			
+			
+			}
+			//Regolo il movimento della racchetta con il mouse
+			coordinataRettangoloX = mouseX-80;
+			//Se coordinata X dell'angolo in alto a sinistra della racchetta rettangoloX è <=0 allora rettangoloX assume valore 0 per far che non supera l'area da disegno
+			if (coordinataRettangoloX <= 0) {
+			coordinataRettangoloX = 0;
+			}
+			//Se coordinata Y dell'angolo in alto a sinistra della racchetta rettangolo Y è >=270 allora rettangoloY assume valore 270
+			if (coordinataRettangoloX >= 270) {
+			coordinataRettangoloX = 270;
+			
+			}
+			//Condizione per far scomparire la palla e portarla in alto quando la racchetta la tocca
+			for(i=0;i<20;i++) {
+			if(coordinataPallaY[i]>=305 && coordinataPallaY[i]<=375){
+			if(coordinataPallaX[i]<coordinataRettangoloX+205 && coordinataPallaX[i]>coordinataRettangoloX-25 ){
+			coordinataPallaY[i]=Math.random() *-2000;						
+			}
+			}
+			}
+			//Se la palla supera il rettangolo viene riportata sopra per non finire la partita 
+			for(i=0;i<20;i++) {
+			if(coordinataPallaY[i]>510){
+			coordinataPallaY[i]=Math.random() *-400;
+			
+			}
+			}
+			//La racchetta
+			fill(0,255,0);
+			rect(coordinataRettangoloX,330,130,20);
+			fill(255,255,255);
+			}
+		</script>
+	</body>
+</html>			
